@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = document.getElementById(iconId);
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+ 
+
+        const passwordInput = document.getElementById('password');
+        const passwordStrengthBar = document.querySelector('.password-strength-bar');
+        const passwordStrengthText = document.querySelector('.password-strength-text');
+
+        function updatePasswordStrength() {
+            const password = passwordInput.value;
+            const passwordStrength = calculatePasswordStrength(password);
+
+            // Update the password strength bar width and color
+            passwordStrengthBar.style.width = `${passwordStrength.percentage}%`;
+            passwordStrengthBar.style.backgroundColor = passwordStrength.color;
+
+            // Update the password strength text
+            passwordStrengthText.textContent = passwordStrength.label;
+        }
+
+        // Function to calculate the password strength
+        function calculatePasswordStrength(password) {
+            // A simple example, you can use a more sophisticated library for better results
+            const passwordLength = password.length;
+            let strength = {};
+
+            if (passwordLength === 0) {
+                strength = { label: '', percentage: 0, color: '' };
+            } else if (passwordLength < 6) {
+                strength = { label: 'Weak', percentage: 25, color: '#f44336' };
+            } else if (passwordLength < 10) {
+                strength = { label: 'Medium', percentage: 50, color: '#ff9800' };
+            } else {
+                strength = { label: 'Strong', percentage: 100, color: '#4caf50' };
+            }
+
+            return strength;
+        }
+
+        // Add an event listener to update the password strength indicator
+        passwordInput.addEventListener('input', updatePasswordStrength);
+
+    </script>
+    <style>
+        /* register.css (append to the file) */
+        .password-strength {
+            display: flex;
+            align-items: center;
+            height: 5px;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .password-strength-bar {
+            background-color: #eee;
+            border-radius: 3px;
+            height: 100%;
+            width: 0%;
+        }
+
+        .password-strength-text {
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <div class="hidden lg:block w-1/2 bg-center bg-cover"
+            style="background-image: url('https://source.unsplash.com/random')"></div>
+        <div class="w-full lg:w-1/2 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 rounded shadow p-6 mx-auto max-w-md w-full">
+                <h2 class="text-2xl font-bold mb-4 text-center">Inscription</h2>
+                <div id="error-message" class="bg-red-500 text-white px-4 py-2 rounded mb-4">
+                    <p>Erreur : Veuillez vérifier les informations fournies et réessayer.</p>
+                </div>
+                <form action="#" method="post" class="space-y-4">
+                    <div>
+                        <label for="full-name" class="block mb-1">Nom complet :</label>
+                        <input type="text" id="full-name" name="full-name"
+                            class="border rounded p-2 w-full dark:bg-gray-800 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="username" class="block mb-1">Nom d'utilisateur :</label>
+                        <input type="text" id="username" name="username"
+                            class="border rounded p-2 w-full dark:bg-gray-800 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-1">Email :</label>
+                        <input type="email" id="email" name="email"
+                            class="border rounded p-2 w-full dark:bg-gray-800 dark:text-white" required>
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-1">Mot de passe :</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password"
+                                class="border rounded p-2 w-full dark:bg-gray-800 dark:text-white" required>
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                <i id="toggle-password-1" class="fas fa-eye"
+                                    onclick="togglePasswordVisibility('password', 'toggle-password-1')" role="button"
+                                    tabindex="0" aria-label="Toggle password visibility"></i>
+                            </span>
+                        </div>
+                        <!-- Add below the password input field -->
+                        <div class="password-strength">
+                            <div class="password-strength-bar"></div>
+                            <div class="password-strength-text"></div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="block mb-1">Confirmer le mot de passe :</label>
+                        <div class="relative">
+                            <input type="password" id="confirm-password" name="confirm-password"
+                                class="border rounded p-2 w-full dark:bg-gray-800 dark:text-white" required>
+                            <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">
+                                <i id="toggle-password-2" class="fas fa-eye"
+                                    onclick="togglePasswordVisibility('confirm-password', 'toggle-password-2')"
+                                    role="button" tabindex="0" aria-label="Toggle password visibility"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="submit" value="S'inscrire"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded cursor-pointer w-full">
+                    </div>
+                </form>
+                <div class="mt-4 text-center">
+                    <p>Déjà un compte ? <a href="#" class="text-blue-500">Se connecter</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

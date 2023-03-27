@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Template avec Tailwind CSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+        crossorigin="anonymous">
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            display: none;
+        }
+
+        .sidebar.collapsed .menu .submenu {
+            display: none;
+        }
+
+        .sidebar .menu .fa-chevron-right {
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar .menu .fa-chevron-right.rotated {
+            transform: rotate(90deg);
+        }
+
+        .sidebar.collapsed .menu .submenu .menu .submenu {
+            display: none;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #1a202c;
+            color: #f1f5f9;
+        }
+
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+
+        .dark-mode .text-gray-600 {
+            color: #a0aec0;
+        }
+
+        .dark-mode .border-gray-300 {
+            border-color: #4a5568;
+        }
+
+        .dark-mode .hover\:bg-gray-200:hover {
+            background-color: #718096;
+        }
+
+        .dark-mode .hover\:text-white:hover {
+            color: #f1f5f9;
+        }
+
+        /* Contenu principal en mode sombre */
+        .dark-mode .content {
+            background-color: #1a202c;
+            color: #f1f5f9;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Le contenu du template ici -->
+    <div class="flex h-screen bg-gray-100">
+        <!-- Barre latérale -->
+        <div id="sidebar" class="bg-white w-64 p-4 flex flex-col transition-all duration-300 sidebar">
+            <h1 class="text-2xl font-bold mb-4">Admin Template</h1>
+            <nav>
+                <div class="menu">
+                    <a href="#" class="block py-2 px-4 rounded flex items-center justify-between"
+                        onclick="toggleSubMenu(event)">
+                        <span class="flex items-center">
+                            <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                        </span>
+                    </a>
+                </div>
+                <div class="menu">
+                    <a href="#" class="block py-2 px-4 rounded flex items-center justify-between"
+                        onclick="toggleSubMenu(event)">
+                        <span class="flex items-center">
+                            <i class="fas fa-users mr-2"></i> Utilisateurs
+                        </span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <ul class="submenu hidden list-none ml-4">
+                        <li>
+                            <a href="#" class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Tous les
+                                utilisateurs</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Ajouter un
+                                utilisateur</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu">
+                    <a href="#" class="block py-2 px-4 rounded flex items-center justify-between"
+                        onclick="toggleSubMenu(event)">
+                        <span class="flex items-center">
+                            <i class="fas fa-newspaper mr-2"></i> Articles
+                        </span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <ul class="submenu hidden list-none ml-4">
+                        <li>
+                            <a href="#" class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Tous les
+                                articles</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Ajouter un
+                                article</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Exemple de menu avec un sous-menu de 4ème niveau -->
+                <div class="menu">
+                    <a href="#" class="block py-2 px-4 rounded flex items-center justify-between"
+                        onclick="toggleSubMenu(event)">
+                        <span class="flex items-center">
+                            <i class="fas fa-cog mr-2"></i> Paramètres
+                        </span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <ul class="submenu hidden list-none ml-4">
+                        <li>
+                            <a href="#" class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Général</a>
+                        </li>
+                        <li class="menu">
+                            <a href="#" class="block py-2 px-4 rounded flex items-center justify-between"
+                                onclick="toggleSubMenu(event)">
+                                <span class="flex items-center">
+                                    <i class="fas fa-shield-alt mr-2"></i> Sécurité
+                                </span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <ul class="submenu hidden list-none ml-4">
+                                <li>
+                                    <a href="#"
+                                        class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Authentification</a>
+                                </li>
+                                <li class="menu">
+                                    <a href="#" class="block py-2 px-4 rounded flex items-center justify-between"
+                                        onclick="toggleSubMenu(event)">
+                                        <span class="flex items-center">
+                                            <i class="fas fa-user-shield mr-2"></i> Permissions
+                                        </span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="submenu hidden list-none ml-4">
+                                        <li>
+                                            <a href="#"
+                                                class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Rôles</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                                class="block py-2 px-4 rounded hover:bg-blue-500 hover:text-white">Utilisateurs</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </div>
+        <!-- Contenu -->
+        <div class="flex-1 flex flex-col">
+
+            <!-- Header -->
+            <header class="p-4 bg-white shadow-md flex justify-between items-center">
+                <i onclick="toggleSidebar()" class="fas fa-bars p-2 bg-blue-500 text-white rounded cursor-pointer"></i>
+                <h2 class="ml-2 text-xl font-bold">Dashboard</h2>
+                <div class="flex items-center">
+
+                    <!-- Icône Dark Mode -->
+                    <i id="dark-mode-icon" onclick="toggleDarkMode()" class="fas fa-moon p-2 cursor-pointer"></i>
+
+                    <!-- Champ de recherche -->
+                    <div class="mx-4">
+                        <form action="#" method="get">
+                            <input type="search" name="search" placeholder="Rechercher..."
+                                class="bg-white dark:bg-gray-800 border rounded p-2">
+                        </form>
+                    </div>
+
+                    <!-- User menu -->
+                    <div class="user-menu relative">
+                        <button onclick="toggleUserMenu()" class="flex items-center space-x-2">
+                            <img src="https://via.placeholder.com/40" alt="User Avatar" class="rounded-full h-8 w-8">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul
+                            class="user-submenu hidden absolute right-0 mt-2 w-48 py-2 bg-white border border-gray-300 rounded text-gray-600">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-200">Mon profil</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-200">Paramètres</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-200">Déconnexion</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+
+            <!-- Contenu principal -->
+            <main class="flex-1 p-4 content">
+                <!-- Formulaire de recherche avancée -->
+                <section class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">Recherche avancée</h3>
+                    <form action="#" method="get" class="space-y-2">
+                        <div>
+                            <label for="search" class="block mb-1">Recherche :</label>
+                            <input type="search" id="search" name="search" placeholder="Rechercher..."
+                                class="bg-white dark:bg-gray-800 border rounded p-2 w-full">
+                        </div>
+                        <div>
+                            <label for="category" class="block mb-1">Catégorie :</label>
+                            <select id="category" name="category"
+                                class="bg-white dark:bg-gray-800 border rounded p-2 w-full">
+                                <option value="">Toutes les catégories</option>
+                                <option value="category1">Catégorie 1</option>
+                                <option value="category2">Catégorie 2</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="p-2 bg-blue-500 text-white rounded">Rechercher</button>
+                    </form>
+                </section>
+
+                <!-- Tableau -->
+                <section class="mb-4">
+                    <h3 class="text-lg font-bold mb-2">Résultats de la recherche</h3>
+                    <table class="w-full border-collapse border border-gray-300 text-gray-600">
+                        <thead>
+                            <tr class="bg-white">
+                                <th class="border border-gray-300 px-4 py-2">Colonne 1</th>
+                                <th class="border border-gray-300 px-4 py-2">Colonne 2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Lignes du tableau -->
+                            <tr class="bg-white">
+                                <td class="border border-gray-300 px-4 py-2">Ligne 1, Colonne 1</td>
+                                <td class="border border-gray-300 px-4 py-2">Ligne 1, Colonne 2</td>
+                            </tr>
+                            <tr class="bg-white">
+                                <td class="border border-gray-300 px-4 py-2">Ligne 2, Colonne 1</td>
+                                <td class="border border-gray-300 px-4 py-2">Ligne 2, Colonne 2</td>
+                            </tr>
+                            <!-- ... -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Pagination -->
+                <!-- Pagination -->
+                <section>
+                    <nav class="flex items-center justify-center">
+                        <i onclick="goToFirstPage()" class="fas fa-angle-double-left p-2 cursor-pointer"></i>
+                        <i onclick="goToPreviousPage()" class="fas fa-angle-left p-2 cursor-pointer"></i>
+                        <!-- Liens de pagination -->
+                        <span class="flex space-x-1 mx-2">
+                            <a href="?page=1"
+                                class="p-2 bg-white text-blue-500 hover:bg-blue-500 hover:text-white rounded">1</a>
+                            <span class="p-2">...</span>
+                            <a href="?page=48"
+                                class="p-2 bg-white text-blue-500 hover:bg-blue-500 hover:text-white rounded">48</a>
+                            <a href="?page=49"
+                                class="p-2 bg-white text-blue-500 hover:bg-blue-500 hover:text-white rounded">49</a>
+                            <a href="?page=50" class="p-2 bg-blue-500 text-white rounded">50</a>
+                            <a href="?page=51"
+                                class="p-2 bg-white text-blue-500 hover:bg-blue-500 hover:text-white rounded">51</a>
+                            <a href="?page=52"
+                                class="p-2 bg-white text-blue-500 hover:bg-blue-500 hover:text-white rounded">52</a>
+                            <span class="p-2">...</span>
+                            <a href="?page=100"
+                                class="p-2 bg-white text-blue-500 hover:bg-blue-500 hover:text-white rounded">100</a>
+                        </span>
+                        <i onclick="goToNextPage()" class="fas fa-angle-right p-2 cursor-pointer"></i>
+                        <i onclick="goToLastPage()" class="fas fa-angle-double-right p-2 cursor-pointer"></i>
+                    </nav>
+                </section>
+
+
+            </main>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleSubMenu(event) {
+            event.preventDefault();
+            const parentMenu = event.target.closest('.menu');
+            const submenu = parentMenu.querySelector('.submenu');
+            const chevron = parentMenu.querySelector('.fa-chevron-right');
+
+            submenu.classList.toggle('hidden');
+            chevron.classList.toggle('transform');
+            chevron.classList.toggle('rotate-90');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+
+        function toggleUserMenu() {
+            const userMenu = document.querySelector('.user-menu');
+            const userSubMenu = userMenu.querySelector('.user-submenu');
+            userSubMenu.classList.toggle('hidden');
+        }
+
+        let darkMode = localStorage.getItem('darkmode') === 'true';
+        function toggleDarkMode() {
+            console.log('here');
+            darkMode = !darkMode;
+            localStorage.setItem('darkmode', darkMode);
+            document.documentElement.classList.toggle('dark-mode', darkMode);
+            updateDarkModeIcon();
+        }
+
+        function updateDarkModeIcon() {
+            const darkModeIcon = document.getElementById('dark-mode-icon');
+            if (darkMode) {
+                darkModeIcon.classList.remove('fa-sun');
+                darkModeIcon.classList.add('fa-moon');
+            } else {
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            }
+        }
+
+
+        // Récupère la préférence de l'utilisateur lors du chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            const darkModePreference = localStorage.getItem('darkMode');
+            if (darkModePreference === 'enabled') {
+                html.classList.add('dark-mode');
+            } else {
+                html.classList.remove('dark-mode');
+            }
+            updateDarkModeIcon();
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>
